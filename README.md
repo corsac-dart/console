@@ -14,7 +14,7 @@ There is no Pub package yet so you have to use git dependency for now:
 
 ```yaml
 dependencies:
-  corsac_di:
+  corsac_console:
     git: https://github.com/corsac-dart/console.git
 ```
 
