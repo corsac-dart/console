@@ -28,9 +28,11 @@ class Console {
   }
 
   Future run(List<String> args) {
-    return new Future(() => commandRunner.run(args)).catchError((e) {
+    var code = 0;
+    return kernel.execute(() => commandRunner.run(args)).catchError((e) {
       print(e);
-      var code = (e is UsageException) ? 64 : 255;
+      code = (e is UsageException) ? 64 : 255;
+    }).whenComplete(() {
       exit(code);
     });
   }
