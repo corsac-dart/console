@@ -19,10 +19,12 @@ class Console {
 
   Console(this.kernel, String name, String description)
       : commandRunner = new CommandRunner(name, description) {
-    List<Command> commands = kernel.get(commandsEntryId);
-    commands.forEach((_) {
-      commandRunner.addCommand(_);
-    });
+    if (kernel.container.has(commandsEntryId)) {
+      List<Command> commands = kernel.get(commandsEntryId);
+      commands.forEach((_) {
+        commandRunner.addCommand(_);
+      });
+    }
   }
 
   Future run(List<String> args) {
