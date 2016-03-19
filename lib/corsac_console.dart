@@ -29,11 +29,15 @@ class Console {
 
   Future run(List<String> args) {
     var code = 0;
-    return kernel.execute(() => commandRunner.run(args)).catchError((e) {
-      print(e);
-      code = (e is UsageException) ? 64 : 255;
-    }).whenComplete(() {
-      exit(code);
-    });
+    return kernel
+        .execute(() => commandRunner.run(args))
+        .catchError((e) {
+          print(e);
+          code = (e is UsageException) ? 64 : 255;
+        })
+        .whenComplete(() => kernel.shutdown())
+        .whenComplete(() {
+          exit(code);
+        });
   }
 }
