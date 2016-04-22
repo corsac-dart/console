@@ -33,11 +33,19 @@ class Speaker {
   }
 }
 
-/// We need to define our kernel module in order to register our HelloWorld
-/// command with the Kernel.
-/// The [Console] class expects that command be added to a special
+/// One way to register commands with the Console is via kernel modules.
+/// The [Console] expects that command be added to a special
 /// container entry under key `console.commands` which is a "dynamic list".
-/// To add your commands use `DI.add()` helper from `corsac_di` package.
+/// To add your commands use `DI.add()` helper as follows.
+///
+/// Another option is to subclass `Console` and register commands in constructor.
+/// E.g.:
+///     class MyConsole extends Console {
+///       MyConsole(Kernel kernel)
+///       : super(kernel, 'my_console', 'Description for my console.') {
+///         commandRunner.addCommand(kernel.get(HelloWorldCommand));
+///       }
+///     }
 class HelloWorldKernelModule extends KernelModule {
   Map getServiceConfiguration(String environment) => {
         // Register our command with the console app by adding it to special
